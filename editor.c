@@ -5,6 +5,9 @@
 #include <termios.h>
 #include <unistd.h>
 
+// ctrl key mapping
+#define CTRL_KEY(k) ((k) & 0x1f)
+
 struct termios orig_termios;
 
 void die(const char *s) {
@@ -48,7 +51,7 @@ int main() {
 
   char c;
   while (1) {
-    // get a character from STDIN, until q
+    // get a character from STDIN
     char c = '\0';
     if (read(STDIN_FILENO, &c, 1) == -1 && errno != EAGAIN) die("read");
     // test for control character
@@ -58,7 +61,9 @@ int main() {
       // display characters typed
       printf("%d ('%c')\r\n", c, c);
     }
-    if (c == 'q') break;
+
+    // quit on ctrl-q
+    if (c == CTRL_KEY('q')) break;
   }
 
   return 0;
