@@ -15,14 +15,17 @@ void editorDrawRows(struct abuf *ab) {
     if (filerow >= E.numrows) {
       if (E.numrows == 0 && y == E.screenrows / 3) {
         char welcome[80];
-        int welcomelen = snprintf(welcome, sizeof(welcome),
-          "Text Editor -- v%s", VERSION);
+        int welcomelen = snprintf(welcome, sizeof(welcome), "Text Editor -- v%s", VERSION);
+
         if (welcomelen > E.screencols) welcomelen = E.screencols;
+
         int padding = (E.screencols - welcomelen) / 2;
+
         if (padding) {
           abAppend(ab, "~", 1);
           padding--;
         }
+
         while (padding--) abAppend(ab, " ", 1);
         abAppend(ab, welcome, welcomelen);
       } else {
@@ -30,8 +33,10 @@ void editorDrawRows(struct abuf *ab) {
       }
     } else {
       int len = E.row[filerow].rsize - E.coloff;
+
       if (len < 0) len = 0;
       if (len > E.screencols) len = E.screencols;
+      
       abAppend(ab, &E.row[filerow].render[E.coloff], len);
     }
 

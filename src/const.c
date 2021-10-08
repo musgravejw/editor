@@ -1,4 +1,4 @@
-#define VERSION "0.0.1"
+#define VERSION "1.0.0"
 #define TAB_STOP 8
 #define QUIT_TIMES 2
 

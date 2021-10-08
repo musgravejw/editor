@@ -8,6 +8,7 @@ Heavily based on `antirez/kilo` and this [tutorial](https://viewsourcecode.org/s
 ```
 $ make
 $ ./editor
+$ cp ./bin/editor /usr/local/bin
 ```
 
 ## Commands
@@ -23,7 +24,7 @@ Ctrl-Q to quit
 ├── Makefile
 ├── README.md
 ├── bin
-│   └── editor
+│   └── editor
 ├── editor.c
 └── src
     ├── const.c
