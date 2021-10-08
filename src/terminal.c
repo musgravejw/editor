@@ -9,8 +9,7 @@ void die(const char *s) {
 }
 
 void disableRawMode() {
-  if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &E.orig_termios) == -1)
-    die("tcsetattr");
+  if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &E.orig_termios) == -1) die("tcsetattr");
 }
 
 void enableRawMode() {
@@ -54,6 +53,7 @@ int editorReadKey() {
     if (seq[0] == '[') {
       if (seq[1] >= '0' && seq[1] <= '9') {
         if (read(STDIN_FILENO, &seq[2], 1) != 1) return '\x1b';
+        
         if (seq[2] == '~') {
           switch (seq[1]) {
             case '1': return HOME_KEY;

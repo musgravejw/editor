@@ -1,8 +1,25 @@
+void abAppend(struct abuf *ab, 
+              const char *s, 
+              int len) {
+  char *new = realloc(ab->b, ab->len + len);
+
+  if (new == NULL) return;
+
+  memcpy(&new[ab->len], s, len);
+
+  ab->b = new;
+  ab->len += len;
+}
+
+void abFree(struct abuf *ab) {
+  free(ab->b);
+}
+
 int editorRowCxToRx(erow *row, 
                     int cx) {
   int rx = 0;
-  int j;
-  for (j = 0; j < cx; j++) {
+
+  for (int j = 0; j < cx; j++) {
     if (row->chars[j] == '\t')
       rx += (TAB_STOP - 1) - (rx % TAB_STOP);
     rx++;
@@ -14,6 +31,7 @@ int editorRowCxToRx(erow *row,
 void editorUpdateRow(erow *row) {
   int tabs = 0;
   int j;
+
   for (j = 0; j < row->size; j++)
     if (row->chars[j] == '\t') tabs++;
 
@@ -70,7 +88,9 @@ void editorDelRow(int at) {
   E.dirty++;
 }
 
-void editorRowAppendString(erow *row, char *s, size_t len) {
+void editorRowAppendString(erow *row, 
+                           char *s, 
+                           size_t len) {
   row->chars = realloc(row->chars, row->size + len + 1);
   memcpy(&row->chars[row->size], s, len);
   row->size += len;
@@ -79,8 +99,11 @@ void editorRowAppendString(erow *row, char *s, size_t len) {
   E.dirty++;
 }
 
-void editorRowInsertChar(erow *row, int at, int c) {
+void editorRowInsertChar(erow *row, 
+                         int at, 
+                         int c) {
   if (at < 0 || at > row->size) at = row->size;
+
   row->chars = realloc(row->chars, row->size + 2);
   memmove(&row->chars[at + 1], &row->chars[at], row->size - at + 1);
   row->size++;
@@ -89,7 +112,8 @@ void editorRowInsertChar(erow *row, int at, int c) {
   E.dirty++;
 }
 
-void editorRowDelChar(erow *row, int at) {
+void editorRowDelChar(erow *row, 
+                     int at) {
   if (at < 0 || at >= row->size) return;
 
   memmove(&row->chars[at], &row->chars[at + 1], row->size - at);

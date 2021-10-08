@@ -21,7 +21,6 @@ char *editorPrompt(char *prompt);
 
 #include "./src/const.c"
 #include "./src/terminal.c"
-#include "./src/buffer.c"
 #include "./src/file.c"
 #include "./src/output.c"
 #include "./src/input.c"

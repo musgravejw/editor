@@ -2,20 +2,16 @@ void editorScroll() {
   E.rx = 0;
 
   if (E.cy < E.numrows) E.rx = editorRowCxToRx(&E.row[E.cy], E.cx);
-
   if (E.cy < E.rowoff) E.rowoff = E.cy;
-
   if (E.cy >= E.rowoff + E.screenrows) E.rowoff = E.cy - E.screenrows + 1;
-
   if (E.rx < E.coloff) E.coloff = E.rx;
-
   if (E.rx >= E.coloff + E.screencols) E.coloff = E.rx - E.screencols + 1;
 }
 
 void editorDrawRows(struct abuf *ab) {
-  int y;
-  for (y = 0; y < E.screenrows; y++) {
+  for (int y = 0; y < E.screenrows; y++) {
     int filerow = y + E.rowoff;
+
     if (filerow >= E.numrows) {
       if (E.numrows == 0 && y == E.screenrows / 3) {
         char welcome[80];
@@ -73,8 +69,9 @@ void editorDrawStatusBar(struct abuf *ab) {
 void editorDrawMessageBar(struct abuf *ab) {
   abAppend(ab, "\x1b[K", 3);
   int msglen = strlen(E.status);
+
   if (msglen > E.screencols) msglen = E.screencols;
-  if (msglen && time(NULL) - E.status_time < 5)
+  if (msglen && time(NULL) - E.status_time < 5) 
     abAppend(ab, E.status, msglen);
 }
 

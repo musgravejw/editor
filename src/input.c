@@ -26,6 +26,7 @@ char *editorPrompt(char *prompt) {
         bufsize *= 2;
         buf = realloc(buf, bufsize);
       }
+
       buf[buflen++] = c;
       buf[buflen] = '\0';
     }
@@ -56,14 +57,10 @@ void editorMoveCursor(int key) {
       }
       break;
     case ARROW_UP:
-      if (E.cy != 0) {
-        E.cy--;
-      }
+      if (E.cy != 0) E.cy--;
       break;
     case ARROW_DOWN:
-      if (E.cy < E.numrows) {
-        E.cy++;
-      }
+      if (E.cy < E.numrows) E.cy++;
       break;
   }
 
@@ -75,9 +72,8 @@ void editorMoveCursor(int key) {
 }
 
 void editorInsertChar(int c) {
-  if (E.cy == E.numrows) {
-    editorInsertRow(E.numrows, "", 0);
-  }
+  if (E.cy == E.numrows) editorInsertRow(E.numrows, "", 0);
+
   editorRowInsertChar(&E.row[E.cy], E.cx, c);
   E.cx++;
 }
@@ -103,6 +99,7 @@ void editorDelChar() {
   if (E.cx == 0 && E.cy == 0) return;
 
   erow *row = &E.row[E.cy];
+  
   if (E.cx > 0) {
     editorRowDelChar(row, E.cx - 1);
     E.cx--;
