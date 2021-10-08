@@ -1,7 +1,7 @@
 # editor
 A simple text editor
 
-Drawn from `antirez/kilo` and this [tutorial](https://viewsourcecode.org/snaptoken/kilo/index.html).
+Heavily based on `antirez/kilo` and this [tutorial](https://viewsourcecode.org/snaptoken/kilo/index.html).
 
 # Build
 
