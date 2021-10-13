@@ -184,6 +184,6 @@ void editorProcessKeypress() {
       editorInsertChar(c);
       break;
   }
-
+  
   quit_times = QUIT_TIMES;
 }

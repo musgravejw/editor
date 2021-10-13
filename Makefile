@@ -1,2 +1,8 @@
-editor: editor.c
-	$(CC) editor.c -o editor -Wall -Wextra -pedantic -std=c99
+editor:
+	@$(CC) editor.c -o ./bin/editor -Wall -Wextra -pedantic -std=c99
+
+clean:
+	rm -rf ./bin/*
+
+install:
+	cp ./bin/editor /usr/local/bin/editor

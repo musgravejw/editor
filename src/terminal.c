@@ -81,7 +81,7 @@ int editorReadKey() {
         case 'F': return END_KEY;
       }
     }
-
+    
     return '\x1b';
   } else {
     return c;

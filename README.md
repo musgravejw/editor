@@ -7,8 +7,8 @@ Heavily based on `antirez/kilo` and this [tutorial](https://viewsourcecode.org/s
 
 ```
 $ make
-$ ./editor
-$ cp ./bin/editor /usr/local/bin
+$ make install
+$ editor [file]
 ```
 
 ## Commands

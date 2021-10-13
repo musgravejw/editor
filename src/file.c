@@ -1,3 +1,6 @@
+char *editorPrompt(char *prompt);
+void editorSetStatusMessage(const char *fmt, ...);
+
 void abAppend(struct abuf *ab, 
               const char *s, 
               int len) {
@@ -20,8 +23,7 @@ int editorRowCxToRx(erow *row,
   int rx = 0;
 
   for (int j = 0; j < cx; j++) {
-    if (row->chars[j] == '\t')
-      rx += (TAB_STOP - 1) - (rx % TAB_STOP);
+    if (row->chars[j] == '\t') rx += (TAB_STOP - 1) - (rx % TAB_STOP);
     rx++;
   }
 
@@ -42,7 +44,9 @@ void editorUpdateRow(erow *row) {
   for (j = 0; j < row->size; j++) {
     if (row->chars[j] == '\t') {
       row->render[idx++] = ' ';
-      while (idx % TAB_STOP != 0) row->render[idx++] = ' ';
+
+      while (idx % TAB_STOP != 0) 
+        row->render[idx++] = ' ';
     } else {
       row->render[idx++] = row->chars[j];
     }
@@ -145,12 +149,14 @@ void editorAppendRow(char *s,
 char *editorRowsToString(int *buflen) {
   int totlen = 0;
   int j;
+
   for (j = 0; j < E.numrows; j++)
     totlen += E.row[j].size + 1;
   *buflen = totlen;
 
   char *buf = malloc(totlen);
   char *p = buf;
+
   for (j = 0; j < E.numrows; j++) {
     memcpy(p, E.row[j].chars, E.row[j].size);
     p += E.row[j].size;
@@ -171,12 +177,14 @@ void editorOpen(char *filename) {
   char *line = NULL;
   size_t linecap = 0;
   ssize_t linelen;
+
   while ((linelen = getline(&line, &linecap, fp)) != -1) {
     while (linelen > 0 && (line[linelen - 1] == '\n' ||
                            line[linelen - 1] == '\r'))
       linelen--;
     editorInsertRow(E.numrows, line, linelen);
   }
+  
   free(line);
   fclose(fp);
   E.dirty = 0;
@@ -205,6 +213,7 @@ void editorSave() {
         return;
       }
     }
+
     close(fd);
   }
 
